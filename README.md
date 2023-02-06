@@ -65,3 +65,5 @@ $ npm run test:cov
 ```
 "start:dev": "set NODE_ENV=develop&& nest start --watch"
 ```
+
+- dbport host: 5433
