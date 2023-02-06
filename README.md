@@ -67,3 +67,19 @@ $ npm run test:cov
 ```
 
 - dbport host: 5433
+
+# USUARIOS WINDOWS
+
+en el package.json reemplazar export por set
+
+# Correr migraciones
+
+```
+npm run m:gen -- ./migrations/init
+```
+
+&&
+
+```
+npm run m:run
+```

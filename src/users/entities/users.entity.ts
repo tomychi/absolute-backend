@@ -1,7 +1,8 @@
-import { BaseEntity } from 'src/config/base.entity';
-import { ROLES } from 'src/interfaces/roles';
-import { IUser } from 'src/interfaces/user.interface';
-import { Column, Entity } from 'typeorm';
+import { BaseEntity } from '../../config/base.entity';
+import { ROLES } from '../../interfaces/roles';
+import { IUser } from '../../interfaces/user.interface';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { UsersCompaniesEntity } from './usersCompanies.entity';
 
 @Entity({ name: 'users' })
 export class UsersEntity extends BaseEntity implements IUser {
@@ -25,4 +26,10 @@ export class UsersEntity extends BaseEntity implements IUser {
 
   @Column({ type: 'enum', enum: ROLES })
   role: ROLES;
+
+  @OneToMany(
+    () => UsersCompaniesEntity,
+    (usersCompanies) => usersCompanies.user,
+  )
+  companiesIncludes: UsersCompaniesEntity[];
 }
