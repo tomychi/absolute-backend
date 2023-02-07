@@ -75,7 +75,7 @@ en el package.json reemplazar export por set
 # Correr migraciones
 
 ```
-npm run m:gen -- ./migrations/init
+npm run m:gen -- ./src/migrations/init
 ```
 
 &&

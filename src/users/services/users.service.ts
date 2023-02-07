@@ -48,7 +48,7 @@ export class UsersService {
       if (!user) {
         throw new ErrorManager({
           type: 'BAD_REQUEST',
-          message: 'No se econtro usuario',
+          message: 'No se econtro usuario con el id: ' + id,
         });
       }
 
@@ -67,7 +67,7 @@ export class UsersService {
       if (user.affected === 0) {
         throw new ErrorManager({
           type: 'BAD_REQUEST',
-          message: 'No se pudo actualizar',
+          message: 'No se pudo actualizar el usuario id: ' + id,
         });
       }
 
@@ -83,7 +83,7 @@ export class UsersService {
       if (user.affected === 0) {
         throw new ErrorManager({
           type: 'BAD_REQUEST',
-          message: 'No se pudo borrar',
+          message: 'No se pudo borrar el usuario id: ' + id,
         });
       }
 
