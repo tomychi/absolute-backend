@@ -1,15 +1,13 @@
-import {
-  IsEnum,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class ProductDTO {
   @IsNotEmpty()
   @IsString()
   name: string;
+
+  @IsNotEmpty()
+  @IsString()
+  model: string;
 
   @IsNotEmpty()
   @IsString()
@@ -20,7 +18,7 @@ export class ProductDTO {
   price: number;
 
   @IsNotEmpty()
-  @IsString()
+  @IsNumber()
   stock: number;
 }
 
@@ -31,6 +29,10 @@ export class ProductUpdateDTO {
 
   @IsOptional()
   @IsString()
+  model: string;
+
+  @IsOptional()
+  @IsString()
   description: string;
 
   @IsOptional()
@@ -38,6 +40,6 @@ export class ProductUpdateDTO {
   price: number;
 
   @IsOptional()
-  @IsString()
+  @IsNumber()
   stock: number;
 }

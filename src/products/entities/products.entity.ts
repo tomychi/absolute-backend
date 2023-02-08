@@ -1,6 +1,6 @@
 import { BaseEntity } from '../../config/base.entity';
 import { IProduct } from 'src/interfaces/product.interface';
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 @Entity({ name: 'products' })
 export class ProductsEntity extends BaseEntity implements IProduct {
@@ -8,11 +8,14 @@ export class ProductsEntity extends BaseEntity implements IProduct {
   name: string;
 
   @Column()
+  model: string;
+
+  @Column()
   description: string;
 
   @Column()
   price: number;
 
-  @Column({ unique: true })
+  @Column()
   stock: number;
 }

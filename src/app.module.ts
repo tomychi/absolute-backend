@@ -13,9 +13,11 @@ import { ProductsModule } from './products/products.module';
       envFilePath: `.${process.env.NODE_ENV}.env`,
       isGlobal: true,
     }),
+
     TypeOrmModule.forRoot({
       ...DataSourceConfig,
     }),
+
     UsersModule,
     CompaniesModule,
     LocationsModule,
