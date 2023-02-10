@@ -71,11 +71,16 @@ $ npm run test:cov
 # USUARIOS WINDOWS
 
 en el package.json reemplazar export por set
+si no funciona instalar win-node-env
+
+```
+npm install win-node-env
+```
 
 # Correr migraciones
 
 ```
-npm run m:gen -- ./src/migrations/init
+npm run m:gen -- ./migrations/init
 ```
 
 &&
