@@ -8,13 +8,19 @@ ConfigModule.forRoot({
 
 const configService = new ConfigService();
 
+const DB_HOST = 'localhost',
+  DB_PORT = 5433,
+  DB_USER = 'uevolve',
+  DB_PASSWORD = 'arcostanzo1234',
+  DB_NAME = 'evolvedb';
+
 export const DataSourceConfig: DataSourceOptions = {
   type: 'postgres',
-  host: configService.get('DB_HOST'),
-  port: configService.get('DB_PORT'),
-  username: configService.get('DB_USER'),
-  password: configService.get('DB_PASSWORD'),
-  database: configService.get('DB_NAME'),
+  host: DB_HOST,
+  port: DB_PORT,
+  username: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_NAME,
   entities: [__dirname + '/../**/**/*.entity{.ts,.js}'],
   migrations: [__dirname + '/../migrations/*{.ts,.js}'],
   synchronize: false,
