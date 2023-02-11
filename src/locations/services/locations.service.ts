@@ -2,19 +2,47 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LocationsEntity } from '../entities/locations.entity';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { LocationDTO, LocationUpdateDTO } from '../dto/location.dto';
+import {
+  LocationDTO,
+  LocationToProductDTO,
+  LocationUpdateDTO,
+} from '../dto/location.dto';
 import { ErrorManager } from 'src/utils/error.manager';
+import { CompaniesEntity } from '../../companies/entities/companies.entity';
+import { LocationsProductsEntity } from '../entities/locationsProducts.entity';
 
 @Injectable()
 export class LocationsService {
   constructor(
     @InjectRepository(LocationsEntity)
     private readonly locationRepository: Repository<LocationsEntity>,
+
+    @InjectRepository(CompaniesEntity)
+    private readonly companyRepository: Repository<CompaniesEntity>,
+
+    @InjectRepository(LocationsProductsEntity)
+    private readonly locationProductRepository: Repository<LocationsProductsEntity>,
   ) {}
 
   public async createLocation(body: LocationDTO): Promise<LocationsEntity> {
     try {
-      return await this.locationRepository.save(body);
+      const id = body.companyId;
+      const company = await this.companyRepository
+        .createQueryBuilder('company')
+        .where({ id })
+        .getOne();
+
+      if (!company) {
+        throw new ErrorManager({
+          type: 'BAD_REQUEST',
+          message: 'No se encontro empresa con el id: ' + id,
+        });
+      }
+      const location = this.locationRepository.create({
+        ...body,
+        company: company,
+      });
+      return await this.locationRepository.save(location);
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
     }
@@ -43,6 +71,9 @@ export class LocationsService {
       const location: LocationsEntity = await this.locationRepository
         .createQueryBuilder('location')
         .where({ id })
+        .leftJoinAndSelect('location.productsIncludes', 'productsIncludes')
+        .leftJoinAndSelect('productsIncludes.product', 'product')
+        .leftJoinAndSelect('location.company', 'company')
         .getOne();
 
       if (!location) {
@@ -91,6 +122,15 @@ export class LocationsService {
       }
 
       return location;
+    } catch (error) {
+      throw ErrorManager.createSignatureError(error.message);
+    }
+  }
+
+  // Relation with product
+  public async relationToProduct(body: LocationToProductDTO) {
+    try {
+      return await this.locationProductRepository.save(body);
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
     }

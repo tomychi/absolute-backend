@@ -8,7 +8,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { UserDTO, UserUpdateDTO } from '../dto/user.dto';
+import { UserDTO, UserToCompanyDTO, UserUpdateDTO } from '../dto/user.dto';
 import { UsersService } from '../services/users.service';
 
 @Controller('users')
@@ -41,5 +41,12 @@ export class UsersController {
   @Delete('delete/:id')
   public async deleteUser(@Param('id', new ParseUUIDPipe()) id: string) {
     return await this.usersService.deleteUser(id);
+  }
+
+  // Relation with Company
+
+  @Post('add-to-company')
+  public async addTocompany(@Body() body: UserToCompanyDTO) {
+    return await this.usersService.relationToCompany(body);
   }
 }

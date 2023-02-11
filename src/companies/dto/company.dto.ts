@@ -8,6 +8,10 @@ export class CompanyDTO {
   @IsNotEmpty()
   @IsString()
   description: string;
+
+  @IsOptional()
+  @IsString()
+  image: string;
 }
 
 export class CompanyUpdateDTO {
@@ -18,4 +22,8 @@ export class CompanyUpdateDTO {
   @IsOptional()
   @IsString()
   description: string;
+
+  @IsOptional()
+  @IsString()
+  image: string;
 }

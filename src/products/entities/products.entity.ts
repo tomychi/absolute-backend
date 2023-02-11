@@ -1,6 +1,7 @@
 import { BaseEntity } from '../../config/base.entity';
 import { IProduct } from 'src/interfaces/product.interface';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { LocationsProductsEntity } from '../../locations/entities/locationsProducts.entity';
 
 @Entity({ name: 'products' })
 export class ProductsEntity extends BaseEntity implements IProduct {
@@ -8,14 +9,12 @@ export class ProductsEntity extends BaseEntity implements IProduct {
   name: string;
 
   @Column()
-  model: string;
-
-  @Column()
-  description: string;
-
-  @Column()
   price: number;
 
-  @Column()
-  stock: number;
+  // Relacion con muchas locations
+  @OneToMany(
+    () => LocationsProductsEntity,
+    (locationsProducts) => locationsProducts.product,
+  )
+  locationsIncludes: LocationsProductsEntity[];
 }

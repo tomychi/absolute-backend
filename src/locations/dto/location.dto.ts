@@ -1,4 +1,13 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+  IsNumber,
+} from 'class-validator';
+import { CompaniesEntity } from '../../companies/entities/companies.entity';
+import { LocationsEntity } from '../entities/locations.entity';
+import { ProductsEntity } from '../../products/entities/products.entity';
 
 export class LocationDTO {
   @IsNotEmpty()
@@ -16,6 +25,14 @@ export class LocationDTO {
   @IsNotEmpty()
   @IsString()
   phone: string;
+
+  @IsOptional()
+  @IsString()
+  image: string;
+
+  @IsNotEmpty()
+  @IsUUID()
+  companyId: CompaniesEntity;
 }
 
 export class LocationUpdateDTO {
@@ -34,4 +51,32 @@ export class LocationUpdateDTO {
   @IsOptional()
   @IsString()
   phone: string;
+
+  @IsOptional()
+  @IsString()
+  image: string;
+}
+/**
+ *
+ * province
+ * city
+ * address
+ * phone
+ *
+ *
+ *
+ * relacion usuario
+ */
+export class LocationToProductDTO {
+  @IsNotEmpty()
+  @IsUUID()
+  location: LocationsEntity;
+
+  @IsNotEmpty()
+  @IsUUID()
+  product: ProductsEntity;
+
+  @IsNotEmpty()
+  @IsNumber()
+  stock: number;
 }

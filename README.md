@@ -88,3 +88,9 @@ npm run m:gen -- ./migrations/init
 ```
 npm run m:run
 ```
+
+# relaciones
+
+users N <----> M companies
+companies 1 <----> M locations
+locations N <----> M products

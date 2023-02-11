@@ -1,6 +1,8 @@
 import { BaseEntity } from '../../config/base.entity';
 import { ILocation } from 'src/interfaces/location.interface';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { CompaniesEntity } from '../../companies/entities/companies.entity';
+import { LocationsProductsEntity } from './locationsProducts.entity';
 
 @Entity({ name: 'locations' })
 export class LocationsEntity extends BaseEntity implements ILocation {
@@ -15,4 +17,20 @@ export class LocationsEntity extends BaseEntity implements ILocation {
 
   @Column()
   phone: string;
+
+  @Column({
+    default: 'https://icons8.com/icon/USd846iCsct5/small-business',
+  })
+  image: string;
+
+  // relacion con la company
+  @ManyToOne(() => CompaniesEntity, (company) => company.locations)
+  company: CompaniesEntity;
+
+  // relacion con muchos productos
+  @OneToMany(
+    () => LocationsProductsEntity,
+    (locationsProducts) => locationsProducts.location,
+  )
+  productsIncludes: LocationsProductsEntity[];
 }
