@@ -2,14 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ErrorManager } from 'src/utils/error.manager';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { UserDTO, UserUpdateDTO } from '../dto/user.dto';
+import { UserDTO, UserToCompanyDTO, UserUpdateDTO } from '../dto/user.dto';
 import { UsersEntity } from '../entities/users.entity';
+import { UsersCompaniesEntity } from '../entities/usersCompanies.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(UsersEntity)
     private readonly userRepository: Repository<UsersEntity>,
+    @InjectRepository(UsersCompaniesEntity)
+    private readonly userCompanyRepository: Repository<UsersCompaniesEntity>,
   ) {}
 
   public async createUser(body: UserDTO): Promise<UsersEntity> {
@@ -43,6 +46,8 @@ export class UsersService {
       const user: UsersEntity = await this.userRepository
         .createQueryBuilder('user')
         .where({ id })
+        .leftJoinAndSelect('user.companiesIncludes', 'companiesIncludes')
+        .leftJoinAndSelect('companiesIncludes.company', 'company')
         .getOne();
 
       if (!user) {
@@ -88,6 +93,15 @@ export class UsersService {
       }
 
       return user;
+    } catch (error) {
+      throw ErrorManager.createSignatureError(error.message);
+    }
+  }
+
+  // Relation with company
+  public async relationToCompany(body: UserToCompanyDTO) {
+    try {
+      return await this.userCompanyRepository.save(body);
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
     }

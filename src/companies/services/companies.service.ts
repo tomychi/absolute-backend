@@ -42,6 +42,9 @@ export class CompaniesService {
       const company = await this.companyRepository
         .createQueryBuilder('company')
         .where({ id })
+        .leftJoinAndSelect('company.locations', 'locations')
+        .leftJoinAndSelect('company.usersIncludes', 'usersIncludes')
+        .leftJoinAndSelect('usersIncludes.user', 'user')
         .getOne();
 
       if (!company) {

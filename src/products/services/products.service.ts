@@ -42,6 +42,8 @@ export class ProductsService {
       const product: ProductsEntity = await this.productRepository
         .createQueryBuilder('product')
         .where({ id })
+        .leftJoinAndSelect('product.locationsIncludes', 'locationsIncludes')
+        .leftJoinAndSelect('locationsIncludes.location', 'location')
         .getOne();
 
       if (!product) {
