@@ -8,6 +8,10 @@ export class ProductDTO {
   @IsNotEmpty()
   @IsNumber()
   price: number;
+
+  @IsOptional()
+  @IsString()
+  image: string;
 }
 
 export class ProductUpdateDTO {
@@ -18,10 +22,8 @@ export class ProductUpdateDTO {
   @IsOptional()
   @IsNumber()
   price: number;
-}
 
-/**
- * name
- * price
- *
- */
+  @IsOptional()
+  @IsString()
+  image: string;
+}

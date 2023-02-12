@@ -11,6 +11,9 @@ export class ProductsEntity extends BaseEntity implements IProduct {
   @Column()
   price: number;
 
+  @Column({ default: 'https://icons8.com/icon/gwhmHssBJGbc/box' })
+  image: string;
+
   // Relacion con muchas locations
   @OneToMany(
     () => LocationsProductsEntity,

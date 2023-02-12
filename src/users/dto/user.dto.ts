@@ -1,7 +1,6 @@
 import {
   IsEnum,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsString,
   IsUUID,
@@ -20,10 +19,6 @@ export class UserDTO {
   lastName: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  age: number;
-
-  @IsNotEmpty()
   @IsString()
   email: string;
 
@@ -34,6 +29,10 @@ export class UserDTO {
   @IsNotEmpty()
   @IsString()
   address: string;
+
+  @IsOptional()
+  @IsString()
+  image: string;
 
   @IsNotEmpty()
   @IsEnum(ROLES)
@@ -50,10 +49,6 @@ export class UserUpdateDTO {
   lastName: string;
 
   @IsOptional()
-  @IsNumber()
-  age: number;
-
-  @IsOptional()
   @IsString()
   email: string;
 
@@ -64,6 +59,10 @@ export class UserUpdateDTO {
   @IsOptional()
   @IsString()
   address: string;
+
+  @IsOptional()
+  @IsString()
+  image: string;
 
   @IsOptional()
   @IsEnum(ROLES)
