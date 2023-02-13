@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import * as morgan from 'morgan';
 import { CORS } from './constants';
 import { ValidationPipe } from '@nestjs/common';
+import * as express from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,6 +20,8 @@ async function bootstrap() {
   );
 
   const configService = app.get(ConfigService);
+
+  app.use(express.json({ limit: '50mb' }));
 
   app.enableCors(CORS);
 

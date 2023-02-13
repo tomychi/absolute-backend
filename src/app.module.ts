@@ -6,6 +6,7 @@ import { DataSourceConfig } from './config/data.source';
 import { UsersModule } from './users/users.module';
 import { LocationsModule } from './locations/locations.module';
 import { ProductsModule } from './products/products.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ProductsModule } from './products/products.module';
     CompaniesModule,
     LocationsModule,
     ProductsModule,
+    CloudinaryModule,
   ],
 })
 export class AppModule {}
