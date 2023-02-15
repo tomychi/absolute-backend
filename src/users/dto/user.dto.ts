@@ -34,7 +34,7 @@ export class UserDTO {
   @IsString()
   image: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsEnum(ROLES)
   role: ROLES;
 }

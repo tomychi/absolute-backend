@@ -3,6 +3,7 @@ import { ROLES } from '../../interfaces/roles';
 import { IUser } from '../../interfaces/user.interface';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { UsersCompaniesEntity } from './usersCompanies.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'users' })
 export class UsersEntity extends BaseEntity implements IUser {
@@ -15,16 +16,19 @@ export class UsersEntity extends BaseEntity implements IUser {
   @Column({ unique: true })
   email: string;
 
+  @Exclude()
   @Column()
   password: string;
 
   @Column()
   address: string;
 
-  @Column({ default: 'https://icons8.com/icon/ARWy_JjgohtA/customer' })
+  @Column({
+    default: 'https://img.icons8.com/officel/16/null/gender-neutral-user.png',
+  })
   image: string;
 
-  @Column({ type: 'enum', enum: ROLES })
+  @Column({ type: 'enum', enum: ROLES, default: ROLES.BASIC })
   role: ROLES;
 
   @OneToMany(

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
 import { ErrorManager } from 'src/utils/error.manager';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { UserDTO, UserToCompanyDTO, UserUpdateDTO } from '../dto/user.dto';
@@ -17,6 +18,7 @@ export class UsersService {
 
   public async createUser(body: UserDTO): Promise<UsersEntity> {
     try {
+      body.password = await bcrypt.hash(body.password, +process.env.HASH_SALT); //para que sea numero
       return await this.userRepository.save(body);
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
@@ -45,6 +47,7 @@ export class UsersService {
       // customizar la consulta
       const user: UsersEntity = await this.userRepository
         .createQueryBuilder('user')
+        .addSelect('user.password')
         .where({ id })
         .leftJoinAndSelect('user.companiesIncludes', 'companiesIncludes')
         .leftJoinAndSelect('companiesIncludes.company', 'company')
@@ -102,6 +105,20 @@ export class UsersService {
   public async relationToCompany(body: UserToCompanyDTO) {
     try {
       return await this.userCompanyRepository.save(body);
+    } catch (error) {
+      throw ErrorManager.createSignatureError(error.message);
+    }
+  }
+
+  // Auth
+  public async findUserBy({ key, value }: { key: keyof UserDTO; value: any }) {
+    try {
+      const user: UsersEntity = await this.userRepository
+        .createQueryBuilder('user')
+        .addSelect('user.password')
+        .where({ [key]: value })
+        .getOne();
+      return user;
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
     }
