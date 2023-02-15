@@ -12,7 +12,9 @@ export class CompaniesEntity extends BaseEntity implements ICompany {
   @Column()
   description: string;
 
-  @Column({ default: 'https://icons8.com/icon/a9ys54NktmiO/organization' })
+  @Column({
+    default: 'https://img.icons8.com/officel/16/null/organization.png',
+  })
   image: string;
 
   // Relacion con users de 1 a muchos

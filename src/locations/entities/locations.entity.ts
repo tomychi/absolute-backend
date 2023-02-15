@@ -19,7 +19,7 @@ export class LocationsEntity extends BaseEntity implements ILocation {
   phone: string;
 
   @Column({
-    default: 'https://icons8.com/icon/USd846iCsct5/small-business',
+    default: 'https://img.icons8.com/officel/16/null/small-business.png',
   })
   image: string;
 

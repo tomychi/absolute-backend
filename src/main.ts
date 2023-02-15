@@ -1,9 +1,9 @@
-import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
+// import { ConfigService } from '@nestjs/config';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as morgan from 'morgan';
 import { CORS } from './constants';
-import { ValidationPipe } from '@nestjs/common';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import * as express from 'express';
 
 async function bootstrap() {
@@ -19,8 +19,7 @@ async function bootstrap() {
     }),
   );
 
-  const configService = app.get(ConfigService);
-
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.use(express.json({ limit: '50mb' }));
 
   app.enableCors(CORS);
@@ -28,8 +27,7 @@ async function bootstrap() {
   // prefijo 'api' localhost:8000/api/....
   app.setGlobalPrefix('api');
 
-  const PORT = 8000;
-  await app.listen(PORT);
+  await app.listen(+process.env.PORT);
   console.log(`Application running on: ${await app.getUrl()}`);
 }
 bootstrap();
