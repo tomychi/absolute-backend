@@ -20,7 +20,9 @@ export class UsersEntity extends BaseEntity implements IUser {
   @Column()
   password: string;
 
-  @Column()
+  @Column({
+    default: 'calle 2',
+  })
   address: string;
 
   @Column({

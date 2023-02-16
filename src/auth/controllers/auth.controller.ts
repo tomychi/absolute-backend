@@ -1,6 +1,16 @@
-import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { AuthDTO } from '../dto/auth.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -17,5 +27,19 @@ export class AuthController {
     const jwt = await this.authService.generateJWT(userValidate);
 
     return jwt;
+  }
+
+  @Get('google')
+  @UseGuards(AuthGuard('google'))
+  async googleAuth(@Req() req: any) {}
+
+  @Get('google/redirect')
+  @UseGuards(AuthGuard('google'))
+  async googleAuthRedirect(@Req() req: Request) {
+    return {
+      statusCode: 200,
+      message: 'Logged in successfully',
+      user: req.user,
+    };
   }
 }

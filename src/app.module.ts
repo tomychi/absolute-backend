@@ -8,6 +8,10 @@ import { LocationsModule } from './locations/locations.module';
 import { ProductsModule } from './products/products.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { AuthModule } from './auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
+import { AuthController } from './auth/controllers/auth.controller';
+import { AuthService } from './auth/services/auth.service';
+import { GoogleStrategy } from './auth/strategies/google.strategy';
 
 @Module({
   imports: [
@@ -26,6 +30,9 @@ import { AuthModule } from './auth/auth.module';
     ProductsModule,
     CloudinaryModule,
     AuthModule,
+    PassportModule,
   ],
+  controllers: [AuthController],
+  providers: [AuthService, GoogleStrategy],
 })
 export class AppModule {}

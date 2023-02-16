@@ -11,5 +11,7 @@ declare namespace NodeJS {
     API_SECRET: string;
     HASH_SALT: number;
     JWT_SECRET: string;
+    CLIENT_ID: string;
+    CLIENT_SECRET: string;
   }
 }

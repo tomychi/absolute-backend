@@ -26,7 +26,7 @@ export class UserDTO {
   @IsString()
   password: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   address: string;
 
