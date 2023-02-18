@@ -19,7 +19,8 @@ export class LocationsEntity extends BaseEntity implements ILocation {
   phone: string;
 
   @Column({
-    default: 'https://img.icons8.com/officel/16/null/small-business.png',
+    default:
+      'https://res.cloudinary.com/db2gtt9hk/image/upload/v1676701165/default/wqkjzjppjplc3hyjbzo2.jpg',
   })
   image: string;
 

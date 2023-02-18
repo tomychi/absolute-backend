@@ -123,4 +123,34 @@ export class UsersService {
       throw ErrorManager.createSignatureError(error.message);
     }
   }
+
+  // traerme la company del usuario por el id
+  public async findUserWithCompanyId(
+    userId: string,
+    companyId: string,
+  ): Promise<any> {
+    try {
+      // customizar la consulta
+      const user: UsersEntity = await this.userRepository
+        .createQueryBuilder('user')
+        .addSelect('user.password')
+        .where({ id: userId })
+        .leftJoinAndSelect('user.companiesIncludes', 'companiesIncludes')
+        .leftJoinAndSelect('companiesIncludes.company', 'company')
+        .getOne();
+
+      if (!user) {
+        throw new ErrorManager({
+          type: 'BAD_REQUEST',
+          message: 'No se econtro usuario con el id: ' + userId,
+        });
+      }
+      const company = user.companiesIncludes.find(
+        (company) => company.company.id === companyId,
+      );
+      return company;
+    } catch (error) {
+      throw ErrorManager.createSignatureError(error.message);
+    }
+  }
 }

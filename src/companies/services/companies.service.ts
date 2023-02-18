@@ -60,6 +60,28 @@ export class CompaniesService {
     }
   }
 
+  // traer comapanies with locations
+  public async findCompanyWithLocations(id: string): Promise<any> {
+    try {
+      const company = await this.companyRepository
+        .createQueryBuilder('company')
+        .where({ id })
+        .leftJoinAndSelect('company.locations', 'locations')
+        .getOne();
+
+      if (!company) {
+        throw new ErrorManager({
+          type: 'BAD_REQUEST',
+          message: 'No se encontro empresa con el id: ' + id,
+        });
+      }
+
+      return company.locations;
+    } catch (error) {
+      throw ErrorManager.createSignatureError(error.message);
+    }
+  }
+
   public async updateCompany(
     body: CompanyUpdateDTO,
     id: string,

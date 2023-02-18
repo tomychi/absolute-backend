@@ -26,7 +26,8 @@ export class UsersEntity extends BaseEntity implements IUser {
   address: string;
 
   @Column({
-    default: 'https://img.icons8.com/officel/16/null/gender-neutral-user.png',
+    default:
+      'https://e7.pngegg.com/pngimages/343/677/png-clipart-computer-icons-user-profile-login-my-account-icon-heroes-black-thumbnail.png',
   })
   image: string;
 

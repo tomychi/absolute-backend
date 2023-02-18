@@ -11,7 +11,10 @@ export class ProductsEntity extends BaseEntity implements IProduct {
   @Column()
   price: number;
 
-  @Column({ default: 'https://img.icons8.com/officel/16/null/box.png' })
+  @Column({
+    default:
+      'https://res.cloudinary.com/db2gtt9hk/image/upload/v1676701165/default/wqkjzjppjplc3hyjbzo2.jpg',
+  })
   image: string;
 
   // Relacion con muchas locations

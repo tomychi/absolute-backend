@@ -73,7 +73,6 @@ export class LocationsService {
         .where({ id })
         .leftJoinAndSelect('location.productsIncludes', 'productsIncludes')
         .leftJoinAndSelect('productsIncludes.product', 'product')
-        .leftJoinAndSelect('location.company', 'company')
         .getOne();
 
       if (!location) {
