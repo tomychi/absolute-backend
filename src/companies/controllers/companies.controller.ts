@@ -5,20 +5,14 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
-  Post,
   Put,
 } from '@nestjs/common';
 import { CompaniesService } from '../services/companies.service';
-import { CompanyDTO, CompanyUpdateDTO } from '../dto/company.dto';
+import { CompanyUpdateDTO } from '../dto/company.dto';
 
 @Controller('companies')
 export class CompaniesController {
   constructor(private readonly companyService: CompaniesService) {}
-
-  @Post('create')
-  public async createCompany(@Body() body: CompanyDTO) {
-    return await this.companyService.createCompany(body);
-  }
 
   @Get('all')
   public async findAllCompanies() {
@@ -28,6 +22,14 @@ export class CompaniesController {
   @Get(':id')
   public async findCompanyById(@Param('id', new ParseUUIDPipe()) id: string) {
     return await this.companyService.findCompanyById(id);
+  }
+
+  // companies with locations
+  @Get('locations/:id')
+  public async findCompanyWithLocations(
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ) {
+    return await this.companyService.findCompanyWithLocations(id);
   }
 
   @Put('edit/:id')

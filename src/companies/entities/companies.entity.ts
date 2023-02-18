@@ -13,7 +13,8 @@ export class CompaniesEntity extends BaseEntity implements ICompany {
   description: string;
 
   @Column({
-    default: 'https://img.icons8.com/officel/16/null/organization.png',
+    default:
+      'https://res.cloudinary.com/db2gtt9hk/image/upload/v1676701165/default/wqkjzjppjplc3hyjbzo2.jpg',
   })
   image: string;
 
