@@ -1,18 +1,15 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ErrorManager } from 'src/utils/error.manager';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { ProductsEntity } from '../entities/products.entity';
 import { ProductDTO, ProductUpdateDTO } from '../dto/product.dto';
 
-import { CloudinaryService } from '../../cloudinary/services/cloudinary.service';
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectRepository(ProductsEntity)
     private readonly productRepository: Repository<ProductsEntity>,
-
-    private cloudinary: CloudinaryService,
   ) {}
 
   public async createProduct(body: ProductDTO): Promise<ProductsEntity> {
@@ -98,11 +95,5 @@ export class ProductsService {
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
     }
-  }
-
-  public async uploadImageToCloudinary(file: Express.Multer.File) {
-    return await this.cloudinary.uploadImage(file).catch(() => {
-      throw new BadRequestException('Invalid file type');
-    });
   }
 }
