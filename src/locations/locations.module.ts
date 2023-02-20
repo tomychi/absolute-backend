@@ -8,7 +8,6 @@ import { LocationsProductsEntity } from './entities/locationsProducts.entity';
 import { ProductsService } from '../products/services/products.service';
 import { ProductsEntity } from '../products/entities/products.entity';
 import { ProductsModule } from '../products/products.module';
-import { CloudinaryModule } from '../cloudinary/cloudinary.module';
 
 @Module({
   imports: [
@@ -19,7 +18,6 @@ import { CloudinaryModule } from '../cloudinary/cloudinary.module';
       ProductsEntity,
     ]),
     ProductsModule,
-    CloudinaryModule,
   ],
   controllers: [LocationsController],
   providers: [LocationsService, ProductsService],

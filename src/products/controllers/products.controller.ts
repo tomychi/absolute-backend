@@ -7,12 +7,9 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
-  UploadedFile,
-  UseInterceptors,
 } from '@nestjs/common';
 import { ProductsService } from '../services/products.service';
 import { ProductDTO, ProductUpdateDTO } from '../dto/product.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('products')
 export class ProductsController {
@@ -44,13 +41,5 @@ export class ProductsController {
   @Delete('delete/:id')
   public async deleteProduct(@Param('id', new ParseUUIDPipe()) id: string) {
     return await this.productsService.deleteProduct(id);
-  }
-
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  public async uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return await (
-      await this.productsService.uploadImageToCloudinary(file)
-    ).url;
   }
 }

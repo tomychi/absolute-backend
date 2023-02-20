@@ -76,4 +76,38 @@ export class LocationsController {
 
     return product;
   }
+
+  @Put('update-products/:locationId/:productId')
+  public async updateProduct(
+    @Param('locationId', new ParseUUIDPipe()) locationId: string,
+    @Param('productId', new ParseUUIDPipe()) productId: string,
+    @Body() body: any,
+  ) {
+    const location = await this.locationsService.findLocationById(locationId);
+    const relation = await this.locationsService.findLocationByProduct(
+      locationId,
+      productId,
+    );
+    if (!relation) throw Error('No existe el producto en la ubicación');
+
+    const relationId = relation.productsIncludes[0].id;
+    const product = relation.productsIncludes[0].product;
+
+    const { stock, ...rest } = body;
+
+    const updateProduct = await this.productsService.updateProduct(
+      rest,
+      productId,
+    );
+
+    const updateRelation = await this.locationsService.updateRelationToProduct(
+      { location, product, stock },
+      relationId,
+    );
+
+    return {
+      updateProduct,
+      updateRelation,
+    };
+  }
 }

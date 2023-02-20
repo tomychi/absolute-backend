@@ -7,11 +7,13 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  Req,
 } from '@nestjs/common';
 import { UserDTO, UserToCompanyDTO, UserUpdateDTO } from '../dto/user.dto';
 import { UsersService } from '../services/users.service';
 import { CompanyDTO } from '../../companies/dto/company.dto';
 import { CompaniesService } from '../../companies/services/companies.service';
+import { Response } from 'express';
 
 @Controller('users')
 export class UsersController {

@@ -134,4 +134,50 @@ export class LocationsService {
       throw ErrorManager.createSignatureError(error.message);
     }
   }
+
+  public async updateRelationToProduct(
+    body: LocationToProductDTO,
+    id: string,
+  ): Promise<UpdateResult> {
+    try {
+      const result = await this.locationProductRepository.update(id, body);
+      if (result.affected === 0) {
+        throw new ErrorManager({
+          type: 'BAD_REQUEST',
+          message: 'No se pudo actualizar el producto id: ' + id,
+        });
+      }
+
+      return result;
+    } catch (error) {
+      throw ErrorManager.createSignatureError(error.message);
+    }
+  }
+
+  public async findLocationByProduct(
+    id: string,
+    productId: string,
+  ): Promise<LocationsEntity> {
+    try {
+      // customizar la consulta
+      const location: LocationsEntity = await this.locationRepository
+        .createQueryBuilder('location')
+        .where({ id })
+        .leftJoinAndSelect('location.productsIncludes', 'productsIncludes')
+        .leftJoinAndSelect('productsIncludes.product', 'product')
+        .andWhere('product.id = :productId', { productId })
+        .getOne();
+
+      if (!location) {
+        throw new ErrorManager({
+          type: 'BAD_REQUEST',
+          message: 'No se el producto en la sucursal con el id: ' + productId,
+        });
+      }
+
+      return location;
+    } catch (error) {
+      throw ErrorManager.createSignatureError(error.message);
+    }
+  }
 }

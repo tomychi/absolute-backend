@@ -11,12 +11,13 @@ import toStream = require('buffer-to-stream');
 export class CloudinaryService {
   async uploadImage(
     file: Express.Multer.File,
+    folder: string,
   ): Promise<UploadApiResponse | UploadApiErrorResponse> {
     const options: UploadApiOptions = {
       resource_type: 'image',
       tags: ['product', 'producto', 'venta'],
       format: 'jpg',
-      folder: 'productos',
+      folder,
     };
     return new Promise((resolve, reject) => {
       const upload = v2.uploader.upload_stream(options, (error, result) => {

@@ -27,7 +27,7 @@ async function bootstrap() {
   // prefijo 'api' localhost:8000/api/....
   app.setGlobalPrefix('api');
 
-  await app.listen(+process.env.PORT);
+  await app.listen(8000);
   console.log(`Application running on: ${await app.getUrl()}`);
 }
 bootstrap();
