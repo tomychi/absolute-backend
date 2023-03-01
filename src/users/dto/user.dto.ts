@@ -28,45 +28,45 @@ export class UserDTO {
 
   @IsOptional()
   @IsString()
-  address: string;
+  address?: string;
 
   @IsOptional()
   @IsString()
-  image: string;
+  image?: string;
 
   @IsOptional()
   @IsEnum(ROLES)
-  role: ROLES;
+  role?: ROLES;
 }
 
 export class UserUpdateDTO {
   @IsOptional()
   @IsString()
-  firstName: string;
+  firstName?: string;
 
   @IsOptional()
   @IsString()
-  lastName: string;
+  lastName?: string;
 
   @IsOptional()
   @IsString()
-  email: string;
+  email?: string;
 
   @IsOptional()
   @IsString()
-  password: string;
+  password?: string;
 
   @IsOptional()
   @IsString()
-  address: string;
+  address?: string;
 
   @IsOptional()
   @IsString()
-  image: string;
+  image?: string;
 
   @IsOptional()
   @IsEnum(ROLES)
-  role: ROLES;
+  role?: ROLES;
 }
 
 export class UserToCompanyDTO {

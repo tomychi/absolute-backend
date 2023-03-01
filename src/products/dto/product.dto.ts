@@ -11,19 +11,19 @@ export class ProductDTO {
 
   @IsOptional()
   @IsString()
-  image: string;
+  image?: string;
 }
 
 export class ProductUpdateDTO {
   @IsOptional()
   @IsString()
-  name: string;
+  name?: string;
 
   @IsOptional()
   @IsNumber()
-  price: number;
+  price?: number;
 
   @IsOptional()
   @IsString()
-  image: string;
+  image?: string;
 }
