@@ -14,7 +14,6 @@ export class AuthService {
       key: 'email',
       value: email,
     });
-
     if (userByEmail) {
       const match = await bcrypt.compare(password, userByEmail.password);
       if (match) return userByEmail;
@@ -31,6 +30,32 @@ export class AuthService {
     expires: number | string;
   }) {
     return jwt.sign(payload, secret, { expiresIn: expires });
+  }
+
+  public async validateUserGoogle(
+    email: string,
+    given_name: string,
+    family_name: string,
+    picture: string,
+  ) {
+    const userByEmail = await this.usersService.findUserBy({
+      key: 'email',
+      value: email,
+    });
+
+    if (userByEmail) {
+      return userByEmail;
+    } else {
+      const randomPassword = Math.random().toString(36).slice(-8);
+      const newUser = await this.usersService.createUser({
+        password: randomPassword,
+        email: email,
+        firstName: given_name,
+        lastName: family_name,
+        image: picture,
+      });
+      return newUser;
+    }
   }
 
   public async generateJWT(user: UsersEntity): Promise<any> {

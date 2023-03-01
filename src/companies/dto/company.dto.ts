@@ -11,19 +11,19 @@ export class CompanyDTO {
 
   @IsOptional()
   @IsString()
-  image: string;
+  image?: string;
 }
 
 export class CompanyUpdateDTO {
   @IsOptional()
   @IsString()
-  name: string;
+  name?: string;
 
   @IsOptional()
   @IsString()
-  description: string;
+  description?: string;
 
   @IsOptional()
   @IsString()
-  image: string;
+  image?: string;
 }

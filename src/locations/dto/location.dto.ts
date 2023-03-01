@@ -28,7 +28,7 @@ export class LocationDTO {
 
   @IsOptional()
   @IsString()
-  image: string;
+  image?: string;
 
   @IsNotEmpty()
   @IsUUID()
@@ -38,23 +38,23 @@ export class LocationDTO {
 export class LocationUpdateDTO {
   @IsOptional()
   @IsString()
-  province: string;
+  province?: string;
 
   @IsOptional()
   @IsString()
-  city: string;
+  city?: string;
 
   @IsOptional()
   @IsString()
-  address: string;
+  address?: string;
 
   @IsOptional()
   @IsString()
-  phone: string;
+  phone?: string;
 
   @IsOptional()
   @IsString()
-  image: string;
+  image?: string;
 }
 /**
  *
