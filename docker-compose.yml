@@ -1,0 +1,13 @@
+services:
+  absolute_pg:
+    image: postgres:16.3
+    container_name: absolute_pg
+    restart: always
+    environment:
+      POSTGRES_DB: absolutedb
+      POSTGRES_USER: uabsolute
+      POSTGRES_PASSWORD: arcostanzo..absolute
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5432:5432
