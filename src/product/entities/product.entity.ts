@@ -1,8 +1,7 @@
 import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../config/base.entity';
 import { CompanyEntity } from '../../company/entities/company.entity';
-import { InventoryEntity } from '../../inventory/entities/inventory.entity';
-import { Exclude } from 'class-transformer';
+import { ProductVariantEntity } from './product-variant.entity';
 
 @Entity({ name: 'product' })
 export class ProductEntity extends BaseEntity {
@@ -12,22 +11,15 @@ export class ProductEntity extends BaseEntity {
   @Column()
   description: string;
 
-  @Column('decimal', { precision: 10, scale: 2 })
-  price: number;
+  @Column()
+  category: string;
 
-  @Column({ unique: true })
-  upc: string;
-
-  @Column({ unique: true })
-  sku: string;
+  @Column({ default: false })
+  isDeleted: boolean;
 
   @ManyToOne(() => CompanyEntity, (company) => company.products)
   company: CompanyEntity;
 
-  @OneToMany(() => InventoryEntity, (inventory) => inventory.product)
-  inventories: InventoryEntity[];
-
-  @Exclude()
-  @Column({ default: false })
-  isDeleted: boolean;
+  @OneToMany(() => ProductVariantEntity, (variant) => variant.product)
+  variants: ProductVariantEntity[];
 }

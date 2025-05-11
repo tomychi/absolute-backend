@@ -4,9 +4,16 @@ import { ProductService } from './services/product.service';
 import { ProductEntity } from './entities/product.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CompanyEntity } from '../company/entities/company.entity';
+import { ProductVariantEntity } from './entities/product-variant.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ProductEntity, CompanyEntity])],
+  imports: [
+    TypeOrmModule.forFeature([
+      ProductEntity,
+      CompanyEntity,
+      ProductVariantEntity,
+    ]),
+  ],
   controllers: [ProductController],
   providers: [ProductService],
 })

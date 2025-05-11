@@ -4,6 +4,7 @@ import { UserCompanyEntity } from '../../user/entities/userCompany.entity';
 import { BaseEntity } from '../../config/base.entity';
 import { BranchEntity } from '../../branch/entities/branch.entity';
 import { ProductEntity } from '../../product/entities/product.entity';
+import { CustomerEntity } from 'src/customer/entities/customer.entity';
 
 @Entity({ name: 'company' })
 export class CompanyEntity extends BaseEntity implements ICompany {
@@ -21,4 +22,7 @@ export class CompanyEntity extends BaseEntity implements ICompany {
 
   @OneToMany(() => ProductEntity, (product) => product.company)
   products: ProductEntity[];
+
+  @OneToMany(() => CustomerEntity, (customer) => customer.company)
+  customers: CustomerEntity[];
 }

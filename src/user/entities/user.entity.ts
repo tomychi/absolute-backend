@@ -4,6 +4,7 @@ import { IUser } from '../../interfaces/user.interface';
 import { UserCompanyEntity } from './userCompany.entity';
 import { BaseEntity } from '../../config/base.entity';
 import { Exclude } from 'class-transformer';
+import { InvoiceEntity } from 'src/invoice/entities/invoice.entity';
 
 @Entity({ name: 'user' })
 export class UserEntity extends BaseEntity implements IUser {
@@ -25,4 +26,7 @@ export class UserEntity extends BaseEntity implements IUser {
 
   @OneToMany(() => UserCompanyEntity, (userCompany) => userCompany.user)
   companyIncludes: UserCompanyEntity[];
+
+  @OneToMany(() => InvoiceEntity, (invoice) => invoice.user)
+  invoices: InvoiceEntity[];
 }
