@@ -5,6 +5,8 @@ import * as morgan from 'morgan';
 import { CORS } from './constants';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { seedStockMovementTypes } from './database/seed-stock-movement-types';
+import { DataSource } from 'typeorm';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -37,6 +39,9 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
+
+  const dataSource = app.get(DataSource);
+  await seedStockMovementTypes(dataSource);
 
   await app.listen(configService.get('PORT'));
 

@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { InventoryService } from '../services/inventory.service';
 import { InventoryEntity } from '../entities/inventory.entity';
 import { InventoryCreateDTO } from '../dto/inventory.dto';
@@ -14,5 +14,10 @@ export class InventoryController {
     @Body() inventoryCreateDTO: InventoryCreateDTO,
   ): Promise<InventoryEntity> {
     return this.inventoryService.createInventory(inventoryCreateDTO);
+  }
+
+  @Get()
+  async getInventoryByCompany(@Query('companyId') companyId: string) {
+    return this.inventoryService.getInventoryByCompany(companyId);
   }
 }

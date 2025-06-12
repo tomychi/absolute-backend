@@ -47,4 +47,17 @@ export class InventoryService {
 
     return this.inventoryRepository.save(newInventory);
   }
+
+  async getInventoryByCompany(companyId: string): Promise<InventoryEntity[]> {
+    return this.inventoryRepository.find({
+      where: {
+        branch: {
+          company: {
+            id: companyId,
+          },
+        },
+      },
+      relations: ['product', 'branch'],
+    });
+  }
 }

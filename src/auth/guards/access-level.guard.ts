@@ -11,8 +11,8 @@ import {
   ADMIN_KEY,
   PUBLIC_KEY,
   ROLES_KEY,
-} from 'src/constants/key.decorators';
-import { ACCESS_LEVEL, ROLES } from 'src/constants/roles';
+} from '../../constants/key.decorators';
+import { ACCESS_LEVEL, ROLES } from '../../constants/roles';
 import { UserService } from '../../user/services/user.service';
 
 @Injectable()

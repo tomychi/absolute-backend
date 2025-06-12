@@ -7,7 +7,7 @@ import {
   IsUUID,
   MinLength,
 } from 'class-validator';
-import { ROLES } from 'src/constants/roles';
+import { ROLES } from '../../constants/roles';
 import { ACCESS_LEVEL } from '../../constants/roles';
 import { ApiProperty } from '@nestjs/swagger';
 

@@ -8,7 +8,7 @@ import {
   UserToCompanyCreateDTO,
   UserUpdateDTO,
 } from '../dto/user.dto';
-import { ErrorManager } from 'src/utils/error.manager';
+import { ErrorManager } from '../../utils/error.manager';
 import { UserCompanyEntity } from '../entities/userCompany.entity';
 import { CompanyEntity } from '../../company/entities/company.entity';
 

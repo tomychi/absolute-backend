@@ -1,4 +1,5 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import * as path from 'path';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
@@ -15,8 +16,11 @@ export const DataSourceConfig: DataSourceOptions = {
   username: configService.get('DB_USER'),
   password: configService.get('DB_PASSWORD'),
   database: configService.get('DB_NAME'),
-  entities: [__dirname + '/../**/**/*.entity{.ts,.js}'],
-  migrations: [__dirname + '/../migrations/*{.ts,.js}'],
+  entities: [
+    path.join(__dirname, '..', '**', '*.entity.ts'),
+    path.join(__dirname, '..', '**', '*.entity.js'),
+  ],
+  migrations: [path.join(__dirname, '..', 'migrations', '*.{ts,js}')],
   synchronize: false,
   migrationsRun: true,
   logging: false,

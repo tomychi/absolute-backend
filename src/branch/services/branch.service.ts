@@ -14,6 +14,16 @@ export class BranchService {
     private companyRepository: Repository<CompanyEntity>,
   ) {}
 
+  async getBranchesByCompany(companyId: string): Promise<BranchEntity[]> {
+    return this.branchRepository.find({
+      where: {
+        company: { id: companyId },
+        isDeleted: false,
+      },
+      order: { createdAt: 'DESC' },
+    });
+  }
+
   // Método para crear una nueva sucursal
   async createBranch(BranchCreateDTO: BranchCreateDTO): Promise<BranchEntity> {
     const { name, location, companyId } = BranchCreateDTO;

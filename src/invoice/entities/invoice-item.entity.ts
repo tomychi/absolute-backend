@@ -1,15 +1,17 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../../config/base.entity';
 import { InvoiceEntity } from './invoice.entity';
-import { ProductVariantEntity } from '../../product/entities/product-variant.entity';
+import { ProductEntity } from '../../product/entities/product.entity';
 
 @Entity({ name: 'invoice_item' })
 export class InvoiceItemEntity extends BaseEntity {
-  @ManyToOne(() => InvoiceEntity, (invoice) => invoice.items)
+  @ManyToOne(() => InvoiceEntity, (invoice) => invoice.items, {
+    onDelete: 'CASCADE',
+  })
   invoice: InvoiceEntity;
 
-  @ManyToOne(() => ProductVariantEntity)
-  productVariant: ProductVariantEntity;
+  @ManyToOne(() => ProductEntity)
+  product: ProductEntity;
 
   @Column()
   quantity: number;

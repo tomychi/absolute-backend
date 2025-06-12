@@ -91,3 +91,9 @@ Finalmente, inicia la API en modo de desarrollo para comenzar a trabajar con ell
 }
 ```
 ¡Gracias por usar Absolute! Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos.
+
+
+
+npm run schema:drop
+npm run m:gen -- src/migrations/init
+npm run m:run

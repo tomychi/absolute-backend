@@ -22,6 +22,11 @@ export class ProductCreateDTO {
 
   @ApiProperty()
   @IsNotEmpty()
+  @IsString()
+  category: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
   @IsNumber({ maxDecimalPlaces: 2 })
   price: number;
 
@@ -38,14 +43,21 @@ export class ProductCreateDTO {
 
 export class ProductUpdateDTO {
   @ApiProperty()
-  @IsString()
   @IsOptional()
+  @IsString()
+  @MinLength(3)
   name?: string;
 
   @ApiProperty()
-  @IsString()
   @IsOptional()
+  @IsString()
+  @MinLength(3)
   description?: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  category?: string;
 
   @ApiProperty()
   @IsOptional()
@@ -53,12 +65,12 @@ export class ProductUpdateDTO {
   price?: number;
 
   @ApiProperty()
-  @IsString()
   @IsOptional()
+  @IsString()
   upc?: string;
 
   @ApiProperty()
-  @IsString()
   @IsOptional()
+  @IsString()
   sku?: string;
 }

@@ -9,14 +9,13 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 import { CompanyService } from '../services/company.service';
 import { CompanyCreateDTO, CompanyUpdateDTO } from '../dto/company.dto';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { AccessLevelGuard } from 'src/auth/guards/access-level.guard';
-import { AccessLevel } from 'src/auth/decorators/access-level.decorator';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
-import { AdminAccess } from 'src/auth/decorators/admin.decorator';
+import { AuthGuard } from '../../auth/guards/auth.guard';
+import { RolesGuard } from '../../auth/guards/roles.guard';
+import { AccessLevelGuard } from '../../auth/guards/access-level.guard';
+import { AccessLevel } from '../../auth/decorators/access-level.decorator';
 
 @ApiTags('Company')
 @UseGuards(AuthGuard, RolesGuard, AccessLevelGuard)

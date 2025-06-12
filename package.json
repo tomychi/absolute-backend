@@ -20,7 +20,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "orm:init": "typeorm-ts-node-commonjs  -d ./src/config/data.source.ts",
     "m:gen": "export NODE_ENV=develop && npm run orm:init migration:generate",
-    "m:run": "export NODE_ENV=develop && npm run orm:init migration:run"
+    "m:run": "export NODE_ENV=develop && npm run orm:init migration:run",
+    "schema:drop": "export NODE_ENV=develop && npm run orm:init schema:drop"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

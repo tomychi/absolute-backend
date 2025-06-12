@@ -3,10 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { CompanyEntity } from '../entities/company.entity';
 import { CompanyCreateDTO, CompanyUpdateDTO } from '../dto/company.dto';
-import { ErrorManager } from 'src/utils/error.manager';
+import { ErrorManager } from '../../utils/error.manager';
 import { UserCompanyEntity } from '../../user/entities/userCompany.entity';
-import { ACCESS_LEVEL } from 'src/constants/roles';
+import { ACCESS_LEVEL } from '../../constants/roles';
 import { UserService } from '../../user/services/user.service';
+import { BranchService } from '../../branch/services/branch.service';
+import { CustomerService } from '../../customer/services/customer.service';
 
 @Injectable()
 export class CompanyService {
@@ -18,6 +20,8 @@ export class CompanyService {
     private userCompanyRepository: Repository<UserCompanyEntity>,
 
     private readonly userService: UserService,
+    private readonly branchService: BranchService,
+    private readonly customerService: CustomerService,
   ) {}
 
   async createCompany(
@@ -26,12 +30,37 @@ export class CompanyService {
   ): Promise<CompanyEntity> {
     try {
       const user = await this.userService.findUserById(userId);
+
+      // Check if the company already exists
+      const existingCompany = await this.companyRepository.findOne({
+        where: { name: body.name },
+      });
+      if (existingCompany) {
+        throw new ErrorManager({
+          type: 'BAD_REQUEST',
+          message: 'La empresa ya existe',
+        });
+      }
+      // Create the company
       const company: CompanyEntity = await this.companyRepository.save(body);
+
+      // Associate the user with the company how owner
       await this.userCompanyRepository.save({
         accessLevel: ACCESS_LEVEL.OWNER,
         user: user,
         company,
       });
+
+      // Create the branches for the company
+      await this.branchService.createBranch({
+        name: 'Sucursal Principal',
+        location: company.address,
+        companyId: company.id,
+      });
+
+      // Create the generic user for the company
+      await this.customerService.createGenericUser(company);
+
       return await this.findCompanyById(company.id);
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);

@@ -9,18 +9,18 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
+import { ApiHeader, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from '../services/user.service';
 import {
   UserCreateDTO,
   UserToCompanyCreateDTO,
   UserUpdateDTO,
 } from '../dto/user.dto';
-import { PublicAccess } from 'src/auth/decorators/public.decorator';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { ApiHeader, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AccessLevel } from 'src/auth/decorators/access-level.decorator';
-import { AdminAccess } from 'src/auth/decorators/admin.decorator';
+import { PublicAccess } from '../../auth/decorators/public.decorator';
+import { AuthGuard } from '../../auth/guards/auth.guard';
+import { RolesGuard } from '../../auth/guards/roles.guard';
+import { AccessLevel } from '../../auth/decorators/access-level.decorator';
+import { AdminAccess } from '../../auth/decorators/admin.decorator';
 import { CompanyEntity } from '../../company/entities/company.entity';
 
 @ApiTags('User')
