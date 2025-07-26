@@ -1,20 +1,16 @@
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import * as dotenv from 'dotenv';
 
-ConfigModule.forRoot({
-  envFilePath: `.${process.env.NODE_ENV}.env`,
-});
-
-const configService = new ConfigService();
+dotenv.config({ path: `.${process.env.NODE_ENV}.env` });
 
 export const DataSourceConfig: DataSourceOptions = {
   type: 'postgres',
-  host: configService.get('DB_HOST'),
-  port: configService.get('DB_PORT'),
-  username: configService.get('DB_USER'),
-  password: configService.get('DB_PASSWORD'),
-  database: configService.get('DB_NAME'),
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   entities: [__dirname + '/../**/**/*.entity{.ts,.js}'],
   migrations: [__dirname + '/../migrations/*{.ts,.js}'],
   synchronize: false,

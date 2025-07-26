@@ -4,8 +4,13 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+export interface IBaseEntity {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 // para mantener los atributes en comunes (las abstractas no se pueden heredar)
-export abstract class BaseEntity {
+export abstract class BaseEntity implements IBaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

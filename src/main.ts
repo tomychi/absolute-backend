@@ -5,6 +5,7 @@ import * as morgan from 'morgan';
 import { CORS } from './constants';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AccessLevelsService } from './modules/access-levels/services/access-levels.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -33,10 +34,19 @@ async function bootstrap() {
     .setTitle('Absolute API')
     .setDescription('Software Empresarial')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
+  // ← AGREGAR SEEDING AUTOMÁTICO
+  try {
+    const accessLevelsService = app.get(AccessLevelsService);
+    await accessLevelsService.initializeDefaultAccessLevels();
+    console.log('✅ Access levels initialized');
+  } catch (error) {
+    console.log('⚠️ Access levels already exist or error:', error);
+  }
 
   await app.listen(configService.get('PORT'));
 
