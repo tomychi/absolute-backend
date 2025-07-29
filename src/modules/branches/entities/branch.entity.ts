@@ -14,10 +14,12 @@ import {
   IsOptional,
   IsEmail,
   IsEnum,
-  IsDecimal,
   MaxLength,
   MinLength,
   Matches,
+  IsNumber,
+  Min,
+  Max,
 } from 'class-validator';
 import { Company } from '../../companies/entities/company.entity';
 import { User } from '../../users/entities/user.entity';
@@ -110,14 +112,31 @@ export class Branch extends BaseEntity {
 
   @Column({ type: 'decimal', precision: 10, scale: 8, nullable: true })
   @IsOptional()
-  @IsDecimal({}, { message: 'Latitude must be a valid decimal number' })
+  @IsNumber(
+    {
+      maxDecimalPlaces: 8,
+    },
+    {
+      message: 'Latitude must be a valid decimal number',
+    },
+  )
+  @Min(-90, { message: 'Latitude must be between -90 and 90' })
+  @Max(90, { message: 'Latitude must be between -90 and 90' })
   latitude?: number;
 
   @Column({ type: 'decimal', precision: 11, scale: 8, nullable: true })
   @IsOptional()
-  @IsDecimal({}, { message: 'Longitude must be a valid decimal number' })
+  @IsNumber(
+    {
+      maxDecimalPlaces: 8,
+    },
+    {
+      message: 'Longitude must be a valid decimal number',
+    },
+  )
+  @Min(-180, { message: 'Longitude must be between -180 and 180' })
+  @Max(180, { message: 'Longitude must be between -180 and 180' })
   longitude?: number;
-
   @Column({
     name: 'business_hours',
     type: 'json',

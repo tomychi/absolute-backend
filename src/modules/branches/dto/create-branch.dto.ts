@@ -3,13 +3,15 @@ import {
   IsOptional,
   IsEmail,
   IsEnum,
-  IsDecimal,
   IsBoolean,
   IsObject,
   MaxLength,
   MinLength,
   Matches,
   IsUUID,
+  IsNumber,
+  Min,
+  Max,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
@@ -86,21 +88,42 @@ export class CreateBranchDto {
   @ApiPropertyOptional({
     example: -34.6037,
     description: 'Branch latitude',
+    type: 'number',
   })
   @IsOptional()
-  @IsDecimal({}, { message: 'Latitude must be a valid decimal number' })
+  @IsNumber(
+    {
+      maxDecimalPlaces: 8,
+    },
+    {
+      message:
+        'Latitude must be a valid decimal number with max 8 decimal places',
+    },
+  )
+  @Min(-90, { message: 'Latitude must be between -90 and 90' })
+  @Max(90, { message: 'Latitude must be between -90 and 90' })
   @Type(() => Number)
   latitude?: number;
 
   @ApiPropertyOptional({
     example: -58.3816,
     description: 'Branch longitude',
+    type: 'number',
   })
   @IsOptional()
-  @IsDecimal({}, { message: 'Longitude must be a valid decimal number' })
+  @IsNumber(
+    {
+      maxDecimalPlaces: 8,
+    },
+    {
+      message:
+        'Longitude must be a valid decimal number with max 8 decimal places',
+    },
+  )
+  @Min(-180, { message: 'Longitude must be between -180 and 180' })
+  @Max(180, { message: 'Longitude must be between -180 and 180' })
   @Type(() => Number)
   longitude?: number;
-
   @ApiPropertyOptional({
     description: 'Business hours for each day of the week',
     example: {

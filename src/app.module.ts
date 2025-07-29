@@ -11,6 +11,8 @@ import { UserCompaniesModule } from './modules/user-companies/user-companies.mod
 import { AccessLevelsService } from './modules/access-levels/services/access-levels.service';
 import { AccessLevelsModule } from './modules/access-levels/access-levels.module';
 import { BranchesModule } from './modules/branches/branches.module';
+import { ProductsModule } from './modules/products/products.module';
+import { InventoryModule } from './modules/inventory/inventory.module';
 
 @Module({
   imports: [
@@ -48,6 +50,8 @@ import { BranchesModule } from './modules/branches/branches.module';
     AccessLevelsModule,
     UserCompaniesModule,
     BranchesModule,
+    ProductsModule,
+    InventoryModule,
   ] as const,
 
   providers: [

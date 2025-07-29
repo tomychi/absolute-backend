@@ -24,3 +24,20 @@ nest g co modules/companies/controllers/companies --flat --no-spec
 nest g mo modules/branches
 nest g s modules/branches/services/branches --flat --no-spec
 nest g co modules/branches/controllers/branches --flat --no-spec
+
+## Product module
+nest g mo modules/products
+nest g s modules/products/services/products --flat --no-spec
+nest g co modules/products/controllers/products --flat --no-spec
+
+## Inventory module
+nest g mo modules/inventory
+nest g s modules/inventory/services/inventory --flat --no-spec
+nest g co modules/inventory/controllers/inventory --flat --no-spec
+
+nest g s modules/inventory/services/stock-movements --flat --no-spec
+
+nest g s modules/inventory/services/stock-transfers --flat --no-spec
+
+nest g co modules/inventory/controllers/stock-movements --flat --no-spec
+nest g co modules/inventory/controllers/stock-transfers --flat --no-spec
