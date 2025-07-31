@@ -21,7 +21,7 @@ export class UpdateInvoiceItemDto extends PartialType(CreateInvoiceItemDto) {
 }
 
 export class UpdateInvoiceDto extends PartialType(
-  OmitType(CreateInvoiceDto, ['branchId', 'customerId'] as const),
+  OmitType(CreateInvoiceDto, ['branchId', 'customerId', 'items'] as const),
 ) {
   @IsOptional()
   @IsArray({ message: 'Items must be an array' })

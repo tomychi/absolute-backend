@@ -101,22 +101,3 @@ export class CreateInvoiceDto {
   userId?: string;
   companyId?: string;
 }
-
-// update-invoice.dto.ts
-import { PartialType, OmitType } from '@nestjs/mapped-types';
-
-export class UpdateInvoiceItemDto extends PartialType(CreateInvoiceItemDto) {
-  @IsOptional()
-  @IsUUID(4, { message: 'Item ID must be a valid UUID' })
-  id?: string;
-}
-
-export class UpdateInvoiceDto extends PartialType(
-  OmitType(CreateInvoiceDto, ['branchId', 'customerId'] as const),
-) {
-  @IsOptional()
-  @IsArray({ message: 'Items must be an array' })
-  @ValidateNested({ each: true })
-  @Type(() => UpdateInvoiceItemDto)
-  items?: UpdateInvoiceItemDto[];
-}
