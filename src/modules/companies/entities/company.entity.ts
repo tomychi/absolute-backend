@@ -1,4 +1,10 @@
-import { Entity, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
 import {
   IsString,
   IsBoolean,
@@ -9,6 +15,7 @@ import {
   MinLength,
 } from 'class-validator';
 import { BaseEntity } from '../../../config/base.entity';
+import { Customer } from '../../../modules/customers/entities/customer.entity';
 
 @Entity('companies')
 export class Company extends BaseEntity {
@@ -71,6 +78,9 @@ export class Company extends BaseEntity {
 
   // @OneToMany(() => Product, product => product.company)
   // products: Product[];
+
+  @OneToMany(() => Customer, (customer) => customer.company)
+  customers: Customer[];
 
   // Helper methods
   get displayName(): string {

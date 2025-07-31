@@ -13,6 +13,8 @@ import { AccessLevelsModule } from './modules/access-levels/access-levels.module
 import { BranchesModule } from './modules/branches/branches.module';
 import { ProductsModule } from './modules/products/products.module';
 import { InventoryModule } from './modules/inventory/inventory.module';
+import { CustomersModule } from './modules/customers/customers.module';
+import { InvoicesModule } from './modules/invoices/invoices.module';
 
 @Module({
   imports: [

@@ -41,3 +41,14 @@ nest g s modules/inventory/services/stock-transfers --flat --no-spec
 
 nest g co modules/inventory/controllers/stock-movements --flat --no-spec
 nest g co modules/inventory/controllers/stock-transfers --flat --no-spec
+
+## Customer module
+nest g mo modules/customers
+nest g s modules/customers/services/customers --flat --no-spec
+nest g co modules/customers/controllers/customers --flat --no-spec
+
+
+## Invoice module
+nest g mo modules/invoices
+nest g s modules/invoices/services/invoices --flat --no-spec
+nest g co modules/invoices/controllers/invoices --flat --no-spec
