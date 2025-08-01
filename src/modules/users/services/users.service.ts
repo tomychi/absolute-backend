@@ -141,11 +141,25 @@ export class UsersService {
   /**
    * Find user with full profile (can be extended for relations)
    */
+  async findByEmailWithCompanies(email: string): Promise<User | null> {
+    return await this.userRepository.findOne({
+      where: { email, isActive: true },
+      relations: [
+        'userCompanies',
+        'userCompanies.company',
+        'userCompanies.accessLevel',
+      ],
+    });
+  }
+
+  /**
+   * Find user with full profile (can be extended for relations)
+   */
   async findOneWithProfile(id: string): Promise<UserResponseDto> {
     const user = await this.userRepository.findOne({
       where: { id },
       // Add relations here when you add them
-      // relations: ['userCompanies', 'userCompanies.company'],
+      relations: ['userCompanies', 'userCompanies.company'],
     });
 
     if (!user) {

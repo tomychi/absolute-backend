@@ -3,7 +3,6 @@ import {
   UserCompany,
   UserCompanyStatus,
 } from '../entities/user-company.entity';
-import { UserResponseDto } from '../../users/dto/user-response.dto';
 import { CompanyResponseDto } from '../../companies/dto/company-response.dto';
 
 export class UserCompanyResponseDto {
@@ -53,11 +52,32 @@ export class UserCompanyResponseDto {
   })
   createdAt: Date;
 
+  // ✅ SOLUCIÓN: Usar definición manual para el usuario
   @ApiPropertyOptional({
     description: 'User information',
-    type: UserResponseDto,
+    type: 'object',
+    properties: {
+      id: { type: 'string', example: 'user-uuid' },
+      email: { type: 'string', example: 'user@example.com' },
+      firstName: { type: 'string', example: 'John' },
+      lastName: { type: 'string', example: 'Doe' },
+      phone: { type: 'string', example: '+1234567890' },
+      isActive: { type: 'boolean', example: true },
+      emailVerified: { type: 'boolean', example: false },
+      fullName: { type: 'string', example: 'John Doe' },
+    },
+    example: {
+      id: 'user-uuid',
+      email: 'user@example.com',
+      firstName: 'John',
+      lastName: 'Doe',
+      phone: '+1234567890',
+      isActive: true,
+      emailVerified: false,
+      fullName: 'John Doe',
+    },
   })
-  user?: UserResponseDto;
+  user?: any; // ✅ Usar any para evitar circular dependency
 
   @ApiPropertyOptional({
     description: 'Company information',
@@ -72,26 +92,36 @@ export class UserCompanyResponseDto {
   invitedBy?: string;
 
   // Static method to transform entity to DTO
-  static fromEntity(userCompany: UserCompany): UserCompanyResponseDto {
+  static fromEntity(uc: UserCompany): UserCompanyResponseDto {
     return {
-      id: userCompany.id,
-      userId: userCompany.userId,
-      companyId: userCompany.companyId,
-      accessLevelId: userCompany.accessLevelId,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
-      roleName: userCompany.accessLevel?.name || 'unknown',
-      status: userCompany.status,
-      isActive: userCompany.isActiveField,
-      joinedAt: userCompany.joinedAt,
-      lastActivity: userCompany.lastActivity,
-      createdAt: userCompany.createdAt,
-      user: userCompany.user
-        ? UserResponseDto.fromEntity(userCompany.user)
+      id: uc.id,
+      userId: uc.userId,
+      companyId: uc.companyId,
+      accessLevelId: uc.accessLevelId,
+      roleName: uc.accessLevel?.name || 'unknown',
+      status: uc.status,
+      isActive: uc.isActiveField,
+      joinedAt: uc.joinedAt,
+      lastActivity: uc.lastActivity,
+      createdAt: uc.createdAt,
+      // ✅ Mapear solo las propiedades básicas del usuario
+      user: uc.user
+        ? {
+            id: uc.user.id,
+            email: uc.user.email,
+            firstName: uc.user.firstName,
+            lastName: uc.user.lastName,
+            phone: uc.user.phone,
+            isActive: uc.user.isActive,
+            emailVerified: uc.user.emailVerified,
+            fullName: `${uc.user.firstName} ${uc.user.lastName || ''}`.trim(),
+            // ❌ NO incluir userCompanies aquí para evitar recursión infinita
+          }
         : undefined,
-      company: userCompany.company
-        ? CompanyResponseDto.fromEntity(userCompany.company)
+      company: uc.company
+        ? CompanyResponseDto.fromEntity(uc.company)
         : undefined,
-      invitedBy: userCompany.invitedBy,
+      invitedBy: uc.invitedBy,
     };
   }
 }

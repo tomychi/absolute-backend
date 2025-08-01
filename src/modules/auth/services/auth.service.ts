@@ -93,9 +93,12 @@ export class AuthService {
    * Login user
    */
   async login(loginDto: LoginDto): Promise<AuthResponseDto> {
-    const user = await this.validateUser(loginDto.email, loginDto.password);
+    // Cambiar la consulta para incluir userCompanies y sus relaciones
+    const user = await this.usersService.findByEmailWithCompanies(
+      loginDto.email,
+    );
 
-    if (!user) {
+    if (!user || !(await user.validatePassword(loginDto.password))) {
       throw new UnauthorizedException(AUTH_ERRORS.INVALID_CREDENTIALS);
     }
 
@@ -109,7 +112,7 @@ export class AuthService {
       user.tokenVersion,
     );
 
-    // Convert user to response DTO
+    // Convert user to response DTO (ya incluye userCompanies)
     const userResponse = UserResponseDto.fromEntity(user);
 
     return {

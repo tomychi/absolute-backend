@@ -1,4 +1,4 @@
-import { Entity, Column, BeforeInsert, BeforeUpdate } from 'typeorm';
+import { Entity, Column, BeforeInsert, BeforeUpdate, OneToMany } from 'typeorm';
 import {
   IsEmail,
   IsString,
@@ -10,6 +10,7 @@ import {
 import { Exclude } from 'class-transformer';
 import * as bcrypt from 'bcrypt';
 import { BaseEntity } from '../../../config/base.entity';
+import { UserCompany } from '../../../modules/user-companies/entities/user-company.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -70,6 +71,11 @@ export class User extends BaseEntity {
   @Column({ name: 'token_version', default: 0 })
   @Exclude({ toPlainOnly: true })
   tokenVersion: number;
+
+  @OneToMany(() => UserCompany, (userCompany) => userCompany.user, {
+    cascade: true,
+  })
+  userCompanies: UserCompany[];
 
   // Methods
   @BeforeInsert()
